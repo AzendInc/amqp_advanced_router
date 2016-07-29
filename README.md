@@ -2,4 +2,12 @@
 This is a set of Java classes that receive messages from a Spring Boot SMQP queue and routes them to different handlers tagged with an annotation.
 
 
-THE CODE WILL BE HERE BY THE END OF TODAY 4/4/2016
+Maven setup reference
+https://maven.apache.org/guides/mini/guide-central-repository-upload.html
+
+
+Or this
+http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github
+
+
+http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html
