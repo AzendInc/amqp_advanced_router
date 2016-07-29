@@ -1,11 +1,11 @@
-package com.azendinc.billassist.injectables.messaging;
+package com.azendinc.amqp;
 
-import com.azendinc.billassist.injectables.messaging.annotations.AmqpMessageHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import com.azendinc.amqp.annotations.AmqpMessageHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AmqpMessageHandlerFactory implements ApplicationContextAware, Initi
     }
 
     /**
-     * This method is called in the startup process for the system, here we use teh context
+     * This method is called in the startup process for the system, here we use the context
      * to get the classes with the annotation which can take a bit longer
      * than we want to on a request.ddd
      * @throws Exception
@@ -55,7 +55,7 @@ public class AmqpMessageHandlerFactory implements ApplicationContextAware, Initi
         handlersMap = allHandlers.values()
             .stream()
             .collect(Collectors.groupingBy(
-                o -> o.getClass().getAnnotation(AmqpMessageHandler.class).type().toString()));
+                o -> o.getClass().getAnnotation(AmqpMessageHandler.class).type()));
     }
 
     @Override

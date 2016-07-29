@@ -1,7 +1,6 @@
-package com.azendinc.billassist.injectables.messaging;
+package com.azendinc.amqp;
 
-import com.azendinc.billassist.constants.ConfigPropertyNames;
-import com.azendinc.billassist.constants.MessageTypes;
+import com.azendinc.amqp.constants.ConfigPropertyNames;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
@@ -15,18 +14,16 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.springframework.amqp.core.BindingBuilder.bind;
 
 /**
- * Configuration class for RabbitMQ system
+ * Configuration class for RabbitMQ system. In order to use properly, you must add the Spring @configuration annodation
+ * to the class implementation
  */
-@Configuration
-public class AmqpConfiguration {
+abstract public class AmqpConfiguration {
     /**
      * Class to wrap the HashMap<String, String> object
      * so that it is easy to refer to by class
@@ -52,19 +49,12 @@ public class AmqpConfiguration {
     private String channelCacheSize;
 
     /**
-     * We flag the massages we are listening for in the
-     * enumerator and then they are collected and returned
-     * here
+     * Returns a string list of the messages to listen for. It is up to the implementer do decide how to build
+     * this list.
      *
      * @return list of messages to listen for
-     * @see MessageTypes
      */
-     protected List<String> routingKeys() {
-         return Arrays.stream(MessageTypes.class.getEnumConstants())
-            .filter(MessageTypes::isListened)
-            .map(MessageTypes::toString)
-            .collect(Collectors.toList());
-     }
+     abstract protected List<String> getRoutingKeysToListenFor();
 
     /**
      * Sets up the ListenerContainer and MessageListeners
@@ -159,7 +149,7 @@ public class AmqpConfiguration {
      */
     @Bean
     public List<Binding> bindings(Queue queue, Exchange exchange) {
-        return routingKeys().stream().collect(
+        return getRoutingKeysToListenFor().stream().collect(
             ArrayList::new,
             (ArrayList<Binding> bindings, String routeKey) ->
                 bindings.add(createBinding(queue, exchange, routeKey)),

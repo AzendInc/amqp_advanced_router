@@ -1,6 +1,5 @@
-package com.azendinc.billassist.injectables.messaging;
+package com.azendinc.amqp;
 
-import com.azendinc.billassist.injectables.messaging.annotations.AmqpMessageHandler;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.AmqpIOException;
 import org.springframework.amqp.core.Message;
@@ -10,6 +9,7 @@ import org.springframework.amqp.rabbit.listener.exception.ListenerExecutionFaile
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MethodInvoker;
+import com.azendinc.amqp.annotations.AmqpMessageHandler;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

@@ -1,6 +1,5 @@
-package com.azendinc.billassist.injectables.messaging;
+package com.azendinc.amqp;
 
-import com.azendinc.billassist.constants.MessageTypes;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +20,7 @@ public class AmqpMessageSender {
      * @param type type of message to send
      * @param data hashmap of data to send
      */
-    public void sendMessage(MessageTypes type, Map<String, String> data) {
-        rabbitTemplate.convertAndSend(type.toString(), data);
+    public void sendMessage(String type, Map<String, String> data) {
+        rabbitTemplate.convertAndSend(type, data);
     }
 }

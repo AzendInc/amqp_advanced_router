@@ -1,6 +1,5 @@
-package com.azendinc.billassist.injectables.messaging.annotations;
+package com.azendinc.amqp.annotations;
 
-import com.azendinc.billassist.constants.MessageTypes;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
@@ -10,6 +9,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Component
 public @interface AmqpMessageHandler {
-    MessageTypes type();
+    String type();
     String methodName() default "handle";
 }
